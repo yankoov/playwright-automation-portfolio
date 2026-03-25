@@ -12,27 +12,24 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: '24' # Директно минаваме на Node 24, за да махнем предупреждението
 
-    # 1. Инсталираме зависимостите вътре в папката playwright
     - name: Install dependencies
       run: npm ci
-      working-directory: playwright 
+      working-directory: ./playwright # Използваме ./ за сигурност
 
-    # 2. Инсталираме браузърите вътре в папката playwright
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-      working-directory: playwright
+      working-directory: ./playwright
 
-    # 3. Пускаме тестовете вътре в папката playwright
     - name: Run Playwright tests
       run: npx playwright test
-      working-directory: playwright
+      working-directory: ./playwright
 
-    # 4. Качваме репорта (пътят до него също е вътре в папката)
-    - uses: actions/upload-artifact@v4
+    - name: Upload Report
+      uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
-        path: playwright/playwright-report/
+        path: playwright/playwright-report/ # Без наклонена черта накрая
         retention-days: 30
