@@ -8,25 +8,21 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    # ТОВА Е КЛЮЧЪТ: Казваме на GitHub да влиза в папка playwright за всяка команда
-    defaults:
-      run:
-        working-directory: playwright 
+    # ИЗТРИХМЕ 'defaults' секцията от тук
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
     - name: Install dependencies
-      run: npm ci
+      run: npm ci # Махнахме working-directory
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install --with-deps # Махнахме working-directory
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test # Махнахме working-directory
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
-        # Тук също добавяме пътя до репорта
-        path: playwright/playwright-report/
+        path: playwright-report/ # Променихме пътя на стандартен
         retention-days: 30
