@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+// ПЪРВИ ТЕСТ
 test('should show error on invalid login', async ({ page }) => {
   await page.goto('https://the-internet.herokuapp.com/login');
 
@@ -8,8 +9,10 @@ test('should show error on invalid login', async ({ page }) => {
   await page.click('button[type=submit]');
 
   await expect(page.locator('#flash')).toContainText('Your username is invalid');
+}); // <--- ТУК ТРЯБВАШЕ ДА ЗАВЪРШИ ПЪРВИЯ ТЕСТ
 
-  test('user can complete purchase flow', async ({ page }) => {
+// ВТОРИ ТЕСТ (Вече е извън първия)
+test('user can complete purchase flow', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
 
   await page.fill('#user-name', 'standard_user');
@@ -28,5 +31,4 @@ test('should show error on invalid login', async ({ page }) => {
   await page.click('[data-test="finish"]');
 
   await expect(page.locator('.complete-header')).toHaveText(/thank you/i);
-});
 });
