@@ -8,6 +8,10 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    # ТОВА Е КЛЮЧЪТ: Казваме на GitHub да влиза в папка playwright за всяка команда
+    defaults:
+      run:
+        working-directory: playwright 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -23,5 +27,6 @@ jobs:
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
-        path: playwright-report/
+        # Тук също добавяме пътя до репорта
+        path: playwright/playwright-report/
         retention-days: 30
