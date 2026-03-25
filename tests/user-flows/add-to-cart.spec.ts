@@ -1,20 +1,22 @@
 import { test, expect } from '@playwright/test';
 
-test('add product to cart', async ({ page }) => {
+test('user can complete purchase flow', async ({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
 
-  await page.goto('https://www.saucedemo.com');
+  await page.fill('#user-name', 'standard_user');
+  await page.fill('#password', 'secret_sauce');
+  await page.click('#login-button');
 
-  await page.locator('#user-name').fill('standard_user');
-  await page.locator('#password').fill('secret_sauce');
+  await page.click('[data-test="add-to-cart-sauce-labs-backpack"]');
+  await page.click('.shopping_cart_link');
+  await page.click('[data-test="checkout"]');
 
-  await page.locator('#login-button').click();
+  await page.fill('[data-test="firstName"]', 'Ivan');
+  await page.fill('[data-test="lastName"]', 'Petrov');
+  await page.fill('[data-test="postalCode"]', '1000');
 
-  await page.locator('.inventory_item button').first().click();
+  await page.click('[data-test="continue"]');
+  await page.click('[data-test="finish"]');
 
-  await page.locator('.shopping_cart_link').click();
-
-  const cartItem = page.locator('.cart_item');
-
-  await expect(cartItem).toHaveCount(1);
-
+  await expect(page.locator('.complete-header')).toHaveText(/thank you/i);
 });
