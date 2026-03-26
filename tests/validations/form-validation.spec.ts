@@ -9,9 +9,8 @@ test('should show error on invalid login', async ({ page }) => {
   await page.click('button[type=submit]');
 
   await expect(page.locator('#flash')).toContainText('Your username is invalid');
-}); // <--- ТУК ТРЯБВАШЕ ДА ЗАВЪРШИ ПЪРВИЯ ТЕСТ
+}); 
 
-// ВТОРИ ТЕСТ (Вече е извън първия)
 test('user can complete purchase flow', async ({ page }) => {
   await page.goto('https://www.saucedemo.com/');
 
