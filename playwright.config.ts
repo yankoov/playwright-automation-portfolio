@@ -1,21 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  // 1. Указваме точно къде са тестовете, за да не чете "old" папките
   testDir: './tests', 
 
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // Заменяме променливите с твърди стойности за локална работа
+  forbidOnly: false, 
+  retries: 0,
   reporter: 'html',
 
   use: {
-    // 2. Добавяме автоматични скрийншоти и видео при грешка
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    
-    // Твоите досегашни настройки
     trace: 'on-first-retry',
     ignoreHTTPSErrors: true,
   },
